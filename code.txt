@@ -1,0 +1,88 @@
+import pandas as pd
+data = pd.read_csv('star_wars_character_dataset.csv')
+data
+
+data.info()
+
+data.describe()
+
+data.describe(include='all')
+
+print("Размерность массива:", data.shape)
+
+column_names = data.columns
+print("Перечисление названий всех колонок:", column_names)
+for column in column_names:
+    match column:
+        case 'name':
+            description = "Описание колонки '{}': имя персонажа".format(column)
+            print(description)
+        case 'height':
+            description = "Описание колонки '{}': рост персонажа".format(column)
+            print(description)
+        case 'mass':
+            description = "Описание колонки '{}': вес(масса) персонажа".format(column)
+            print(description)
+        case 'hair_color':
+            description = "Описание колонки '{}': цвет волос персонажа".format(column)
+            print(description)
+        case 'eye_color':
+            description = "Описание колонки '{}': цвет глаз персонажа".format(column)
+            print(description)
+        case 'birth_year':
+            description = "Описание колонки '{}': возраст персонажа".format(column)
+            print(description)
+        case 'sex':
+            description = "Описание колонки '{}': пол персонажа".format(column)
+            print(description)
+        case 'gender':
+            description = "Описание колонки '{}': гендер персонажа".format(column)
+            print(description)
+        case 'homeworld':
+            description = "Описание колонки '{}': родина персонажа".format(column)
+            print(description)
+        case 'species':
+            description = "Описание колонки '{}': раса персонажа".format(column)
+            print(description)
+        case 'films':
+            description = "Описание колонки '{}': участия в фильмах персонажа".format(column)
+            print(description)
+        case 'vehicles':
+            description = "Описание колонки '{}': транспортные средства персонажа".format(column)
+            print(description)
+        case 'starships':
+            description = "Описание колонки '{}': корабли персонажа".format(column)
+            print(description)
+
+
+for column in column_names:
+    unique_values = data[column].unique()
+    print("Уникальные значения для колонки '{}': {}".format(column, unique_values))
+
+data = data.sort_values(by='birth_year', ascending=False)
+data
+
+data = data.drop(['gender'], axis=1)
+data
+
+drop_data = data.dropna()
+drop_data
+
+new = {'mass': 'weight', 'birth_year': 'age', 'homeworld': 'homeland'}
+data.rename(columns=new, inplace=True)
+data
+
+data.drop_duplicates(inplace=True)
+data
+
+drop_data = data.drop_duplicates(subset=['vehicles', 'starships'])
+drop_data
+
+value = data.loc[data['name'] == 'Obi-Wan Kenobi']
+value
+
+values = data.loc[data['mass'] == 77.0]
+values
+
+data.to_html('star_wars_page.html', index=False)
+data.to_csv('new_sw_dataset.csv', index=False)
